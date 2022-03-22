@@ -39,7 +39,7 @@ class Day extends StatelessWidget {
       height: 60,
       width: 60,
       decoration: BoxDecoration(
-        color: active != null ?Color.fromRGBO(208, 186, 255, 1) : Color.fromARGB(255, 196, 196, 196),
+        color: active != null ?Color.fromRGBO(208, 186, 255, 1) : Color.fromARGB(255, 226, 226, 226),
         borderRadius: BorderRadius.all(
           Radius.circular(13.0),
         ),
