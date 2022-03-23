@@ -4,6 +4,7 @@ import 'package:to_do_app/elements/bigCounter.dart';
 import 'package:to_do_app/elements/day.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_app/elements/toDo.dart';
+import 'package:to_do_app/elements/wordss.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
 
 class ToDo extends StatelessWidget {
   const ToDo({Key? key}) : super(key: key);
+
+  static List<String> tits = ["hello", "hello2", "hello3"];
 
   @override
   Widget build(BuildContext context) {
@@ -124,18 +127,14 @@ class ToDo extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: <Widget>[
-                      ToDos(
-                        Ctitle: "andare a fare la spesa",
-                      ),
-                      ToDos(
-                        Ctitle: "finire l'app",
-                      ),
-                    ],
-                  ),
-                ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: tits.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ToDos(Ctitle: tits[index]);
+                        })),
               ],
             ),
           ),
@@ -143,7 +142,10 @@ class ToDo extends StatelessWidget {
             onPressed: () {},
             backgroundColor: Color.fromRGBO(208, 186, 255, 1),
             foregroundColor: Color.fromRGBO(128, 90, 208, 1),
-            child: Icon(Icons.add, size: 35,),
+            child: Icon(
+              Icons.add,
+              size: 35,
+            ),
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat),
