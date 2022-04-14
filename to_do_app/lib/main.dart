@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 class ToDo extends StatelessWidget {
   const ToDo({Key? key}) : super(key: key);
 
-  static List<String> tits = ["hello", "hello2", "hello3"];
+  static List<String> tits = ["hello", "hello4", "hello3"];
 
   @override
   Widget build(BuildContext context) {
@@ -111,30 +111,26 @@ class ToDo extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20), //apply padding to all four sides
-                  child: Row(
-                    children: [
-                      Text(
-                        "To Do",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                        ),
+                Row(
+                  children: [
+                    Text(
+                      "To Do",
+                      style: GoogleFonts.montserrat(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: tits.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ToDos(Ctitle: tits[index]);
-                        })),
+                Expanded(
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: tits.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ToDos(Ctitle: tits[index]);
+                      }),
+                ),
               ],
             ),
           ),

@@ -15,8 +15,8 @@ class _ToDosState extends State<ToDos> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17),
       child: Card(
         
         shape: RoundedRectangleBorder(
