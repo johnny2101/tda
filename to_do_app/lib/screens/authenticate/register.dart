@@ -1,20 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:to_do_app/elements/day.dart';
-import 'package:to_do_app/models/user.dart';
 import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/shared/constants.dart';
+import 'package:to_do_app/shared/loading.dart';
+import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  const SignIn({Key? key, required this.toggleView}) : super(key: key);
+  const Register({Key? key, required this.toggleView}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
-
   final _formKey = GlobalKey<FormState>();
 
   bool loading = false;
@@ -25,19 +23,19 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text("Sign In"),
+        title: const Text("Sign up"),
         actions: <Widget>[
           TextButton.icon(
             onPressed: () {
               widget.toggleView();
             },
-            icon: Icon(Icons.person),
-            label: Text("sign up"),
+            icon: Icon(Icons.login),
+            label: Text("sign in"),
             style: TextButton.styleFrom(
               primary: Colors.white,
             ),
@@ -80,10 +78,10 @@ class _SignInState extends State<SignIn> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     setState(() => loading = true);
-                    dynamic result = await _auth.signInEmail(email, password);
+                    dynamic result = await _auth.registerEmail(email, password);
                     if (result == null) {
                       setState(() {
-                        error = 'wrong credentials';
+                        error = 'invalid email or password';
                         loading = false;
                       });
                     } else {
@@ -92,30 +90,15 @@ class _SignInState extends State<SignIn> {
                   }
                 },
                 child: const Text(
-                  "Sign In",
+                  "Register",
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
-              ),
-              Text(
-                error,
-                style: TextStyle(color: Colors.red),
-              ),
+              )
             ],
           ),
         ),
-        // child: ElevatedButton(
-        //   onPressed: () async{
-        //     dynamic result = await _auth.signInAnon();
-        //     if(result == null){
-        //       print("error signin in");
-        //     } else{
-        //       print(result.uid);
-        //     }
-        //   },
-        //   child: Text('sign in anon'),
-        //),
       ),
     );
   }

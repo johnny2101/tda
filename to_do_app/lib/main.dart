@@ -49,12 +49,13 @@ class ToDo extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({
+  HomePage({
     Key? key,
     required this.tits,
   }) : super(key: key);
 
   final List<String> tits;
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,9 @@ class HomePage extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 249, 249, 249),
           actions: <Widget>[
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                await _auth.SignOut();
+              },
               icon: Icon(Icons.logout),
               label: Text(""),
             ),
