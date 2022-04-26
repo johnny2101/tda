@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/elements/BigProject.dart';
 import 'package:to_do_app/elements/bigCounter.dart';
 import 'package:to_do_app/elements/day.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:to_do_app/elements/newToDo.dart';
 import 'package:to_do_app/elements/toDo.dart';
 import 'package:to_do_app/elements/wordss.dart';
 import 'package:to_do_app/screens/wrapper.dart';
@@ -57,8 +59,26 @@ class HomePage extends StatelessWidget {
   final List<String> tits;
   final AuthService _auth = AuthService();
 
+  final Stream<QuerySnapshot> users =
+      FirebaseFirestore.instance.collection('users').snapshots();
+
   @override
   Widget build(BuildContext context) {
+    void _showSettingPanel() {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 60.0,
+            ),
+            child: CustomForm(),
+          );
+        },
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -165,19 +185,36 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: tits.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ToDos(Ctitle: tits[index]);
-                    }),
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: users,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("errore");
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("loading");
+                    }
+
+                    final data = snapshot.requireData;
+
+                    return ListView.builder(
+                      itemCount: data.size,
+                      itemBuilder: (context, index) {
+                        return ToDos(Ctitle: data.docs[index]['name'], done: data.docs[index]['check']);
+                        ;
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            _showSettingPanel();
+          },
           backgroundColor: Color.fromRGBO(208, 186, 255, 1),
           foregroundColor: Color.fromRGBO(128, 90, 208, 1),
           child: Icon(

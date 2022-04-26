@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 class ToDos extends StatefulWidget {
   final String Ctitle;
-  const ToDos({Key? key, required this.Ctitle}) : super(key: key);
+  final bool done;
+  const ToDos({Key? key, required this.Ctitle, required this.done}) : super(key: key);
 
   
 
   @override
-  State<ToDos> createState() => _ToDosState();
+  State<ToDos> createState() => _ToDosState(
+  );
+  
+
 }
 
 class _ToDosState extends State<ToDos> {
@@ -15,6 +19,7 @@ class _ToDosState extends State<ToDos> {
 
   @override
   Widget build(BuildContext context) {
+    check = widget.done;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17),
       child: Card(
