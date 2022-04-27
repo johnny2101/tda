@@ -201,7 +201,7 @@ class HomePage extends StatelessWidget {
                     return ListView.builder(
                       itemCount: data.size,
                       itemBuilder: (context, index) {
-                        return ToDos(Ctitle: data.docs[index]['name'], done: data.docs[index]['check']);
+                        return ToDos(id: data.docs[index].id, Ctitle: data.docs[index]['name'], done: data.docs[index]['check']);
                         ;
                       },
                     );

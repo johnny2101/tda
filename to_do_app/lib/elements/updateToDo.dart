@@ -2,14 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/shared/constants.dart';
 
-class CustomForm extends StatefulWidget {
-  const CustomForm({Key? key}) : super(key: key);
+class UpdateForm extends StatefulWidget {
+  final String id;
+  String name;
+  UpdateForm({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
-  State<CustomForm> createState() => _CustomFormState();
+  State<UpdateForm> createState() => _UpdateFormState();
 }
 
-class _CustomFormState extends State<CustomForm> {
+class _UpdateFormState extends State<UpdateForm> {
   final _formKey = GlobalKey<FormState>();
 
   var name = '';
@@ -23,6 +26,7 @@ class _CustomFormState extends State<CustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+              initialValue: widget.name,
               decoration: textDecs,
               onChanged: (value) {
                 name = value;
@@ -41,14 +45,9 @@ class _CustomFormState extends State<CustomForm> {
                     SnackBar(content: Text("sending data to cloud firestore")),
                   );
 
-                  users
-                      .add({'name': name, 'check': false})
-                      .then((value){
-                        Navigator.pop(context);
-                      })
-                      .catchError((error) => print("error"));
-
-                  
+                  users.doc(widget.id).update({'name': name}).then((value) {
+                    Navigator.pop(context);
+                  }).catchError((error) => print("error"));
                 }
               },
               child: Text("Submit"),
