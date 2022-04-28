@@ -45,7 +45,7 @@ class _UpdateFormState extends State<UpdateForm> {
                     SnackBar(content: Text("sending data to cloud firestore")),
                   );
 
-                  users.doc(widget.id).update({'name': name}).then((value) {
+                  users.doc('KsZ1GZ0AvUsX54JMKvoX').collection('todos').doc(widget.id).update({'name': name}).then((value) {
                     Navigator.pop(context);
                   }).catchError((error) => print("error"));
                 }

@@ -16,7 +16,7 @@ class _CustomFormState extends State<CustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    CollectionReference users = FirebaseFirestore.instance.collection('users').doc('KsZ1GZ0AvUsX54JMKvoX').collection('todos');
     return Form(
       key: _formKey,
       child: Column(
@@ -42,7 +42,7 @@ class _CustomFormState extends State<CustomForm> {
                   );
 
                   users
-                      .add({'name': name, 'check': false})
+                      .add({'name': name, 'done': false})
                       .then((value){
                         Navigator.pop(context);
                       })

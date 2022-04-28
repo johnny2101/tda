@@ -34,7 +34,7 @@ class Day extends StatelessWidget {
           ],
         ),
       ),
-      margin: EdgeInsets.all(7.5),
+      margin: EdgeInsets.all(9),
       height: 60,
       width: 60,
       decoration: BoxDecoration(

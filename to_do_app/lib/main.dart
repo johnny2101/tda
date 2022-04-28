@@ -11,7 +11,7 @@ import 'package:to_do_app/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/services/auth.dart';
-
+import 'package:intl/intl.dart';
 import 'models/user.dart';
 
 void main() async {
@@ -59,9 +59,16 @@ class HomePage extends StatelessWidget {
   final List<String> tits;
   final AuthService _auth = AuthService();
 
-  final Stream<QuerySnapshot> users =
-      FirebaseFirestore.instance.collection('users').snapshots();
+  final Stream<QuerySnapshot> users = FirebaseFirestore.instance
+      .collection('users')
+      .doc('KsZ1GZ0AvUsX54JMKvoX')
+      .collection('todos')
+      .snapshots();
 
+  static final DateTime now = DateTime.now();
+  static DateFormat formatter = DateFormat('EEEE');
+  //final int formatted = int.parse(formatter.format(now));
+  final String formatted = formatter.format(now);
   @override
   Widget build(BuildContext context) {
     void _showSettingPanel() {
@@ -81,6 +88,18 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2022),
+                lastDate: DateTime(2023),
+              );
+            },
+            icon: Icon(Icons.calendar_month),
+            color: Color.fromRGBO(128, 90, 208, 1),
+          ),
           elevation: 0,
           backgroundColor: Color.fromARGB(255, 249, 249, 249),
           actions: <Widget>[
@@ -88,7 +107,10 @@ class HomePage extends StatelessWidget {
               onPressed: () async {
                 await _auth.SignOut();
               },
-              icon: Icon(Icons.logout),
+              icon: Icon(
+                Icons.logout,
+                color: Color.fromRGBO(128, 90, 208, 1),
+              ),
               label: Text(""),
             ),
           ],
@@ -101,34 +123,43 @@ class HomePage extends StatelessWidget {
               // const SizedBox(
               //   height: 50,
               // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Day(
-                    number: 1,
-                    day: "mon",
-                    active: true,
-                  ),
-                  Day(
-                    number: 2,
-                    day: "tue",
-                  ),
-                  Day(
-                    number: 3,
-                    day: "wen",
-                  ),
-                  Day(
-                    number: 4,
-                    day: "thu",
-                  ),
-                  Day(
-                    number: 5,
-                    day: "fri",
-                  ),
-                ],
+              SizedBox(
+                height: 78,
+                child: ListView(
+                  // This next line does the trick.
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Day(
+                      number: 27,
+                      day: formatted.substring(0, 3),
+                      active: true,
+                    ),
+                    Day(
+                      number: 2,
+                      day: "tue",
+                    ),
+                    Day(
+                      number: 3,
+                      day: "wen",
+                    ),
+                    Day(
+                      number: 4,
+                      day: "thu",
+                    ),
+                    Day(
+                      number: 5,
+                      day: "fri",
+                    ),
+                    Day(
+                      number: 5,
+                      day: "fri",
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -201,7 +232,10 @@ class HomePage extends StatelessWidget {
                     return ListView.builder(
                       itemCount: data.size,
                       itemBuilder: (context, index) {
-                        return ToDos(id: data.docs[index].id, Ctitle: data.docs[index]['name'], done: data.docs[index]['check']);
+                        return ToDos(
+                            id: data.docs[index].id,
+                            Ctitle: data.docs[index]['name'],
+                            done: data.docs[index]['done']);
                         ;
                       },
                     );
