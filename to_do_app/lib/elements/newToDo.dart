@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/models/daySelector.dart';
 import 'package:to_do_app/shared/constants.dart';
 
 class CustomForm extends StatefulWidget {
@@ -16,7 +18,7 @@ class _CustomFormState extends State<CustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users').doc('KsZ1GZ0AvUsX54JMKvoX').collection('todos');
+    CollectionReference users = FirebaseFirestore.instance.collection('users').doc('rHfHTVGIDxhejdWr60BrAzX6qQI2').collection('todos');
     return Form(
       key: _formKey,
       child: Column(
@@ -42,7 +44,7 @@ class _CustomFormState extends State<CustomForm> {
                   );
 
                   users
-                      .add({'name': name, 'done': false})
+                      .add({'name': name, 'done': false, 'timestamp': context.read<daySelector>().day.toString()})
                       .then((value){
                         Navigator.pop(context);
                       })

@@ -61,7 +61,10 @@ class _ToDosState extends State<ToDos> {
                     : Icons.check_circle_outline),
                 color: Color.fromRGBO(128, 90, 208, 1),
               ),
-              title: Text(widget.Ctitle),
+              title: Text(
+                widget.Ctitle,
+                style: TextStyle(decoration: check? TextDecoration.lineThrough : null),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

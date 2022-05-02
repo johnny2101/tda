@@ -17,7 +17,7 @@ void UpdateDone(String id, bool check) {
 void RemoveToDo(String id, bool check) {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  users.doc('KsZ1GZ0AvUsX54JMKvoX').collection('todos').doc(id).delete();
+  users.doc('rHfHTVGIDxhejdWr60BrAzX6qQI2').collection('todos').doc(id).delete();
 
   print("hello");
 }

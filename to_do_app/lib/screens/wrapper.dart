@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do_app/main.dart';
 import 'package:to_do_app/screens/authenticate/authenticate.dart';
 import 'package:to_do_app/screens/home/home.dart';
+import 'package:to_do_app/screens/home/homePage.dart';
 
 import '../models/user.dart';
 
